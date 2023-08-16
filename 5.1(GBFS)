@@ -1,0 +1,53 @@
+import numpy as np
+import pandas as pd
+
+def greedybfs(a,hsld):
+  visited=[]
+  q=[]
+  path=[0 for j in range(len(a))]
+  i=int(input("Enter initial state"))
+  o=int(input("Enter final state"))
+  q.append(i)
+  while(True):
+    u=q.pop(0)
+    visited.append(u)
+    if(u==o):
+      print("goal reached")
+      dp=[]
+      j=o
+      dp.append(o)
+      while(j!=i):
+            dp.append(path[j])
+            j=path[j]
+      path.append(i)
+      dp=dp[::-1]
+      return dp
+
+    for j in range(len(a)):
+      if a[u][j]!=0 and j not in visited:
+        q.append(j)
+        path[j]=u
+    sort(q,hsld)
+
+
+def sort(q,hsld):
+  t=0
+  for i in range(len(q)):
+    for j in range(len(q)-i-1):
+      if hsld[q[j]]>hsld[q[j+1]]:
+        t=q[j]
+        q[j]=q[j+1]
+        q[j+1]=t
+
+a=[[0,1,2,0,0,0,0,0,0,0],[1,0,0,7,9,5,0,0,0,0],[2,0,0,0,0,0,4,3,6,8],[0,7,0,0,0,0,0,0,0,0],[0,9,0,0,0,0,0,0,0,0],[0,5,0,0,0,0,0,0,0,0],[0,0,4,0,0,0,0,0,0,0],
+   [0,0,3,0,0,0,0,0,1,0],[0,0,6,0,0,0,0,1,0,0],[0,0,8,0,0,0,0,0,0,0]]
+hsld={0:8,1:10,2:4,3:15,4:14,6:7,5:12,7:2,8:0,9:11}
+greedybfs(a,hsld)
+
+
+Output:
+
+Enter initial state0
+Enter final state8
+goal reached
+[0, 2, 8]
