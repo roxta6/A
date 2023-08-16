@@ -1,0 +1,24 @@
+import math
+     
+
+def minimax(curdepth,node,maximum,utilities,target):
+  if curdepth==target:
+    return utilities[node]
+  else:
+    if maximum:
+      return max(minimax(curdepth+1,node*2,False,utilities,target),minimax(curdepth+1,(node*2)+1,False,utilities,target))
+    else:
+      return min(minimax(curdepth+1,node*2,True,utilities,target),minimax(curdepth+1,(node*2)+1,True,utilities,target))
+
+     
+
+l=[int(x) for x in input("Enter utility values").split()]
+depth=math.log(len(l),2)
+res=minimax(0,0,True,l,depth)
+print("Optimal value:",res)
+
+
+Output:
+
+Enter utility values-1 4 2 6 -3 -5 0 7
+Optimal value: 4
