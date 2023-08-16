@@ -1,0 +1,35 @@
+def alphabetapruning(node,depth,utilities,maximum,target,alpha,beta):
+  if depth==target:
+    return utilities[node]
+  else:
+    if maximum:
+      for i in range(2):
+              r=alphabetapruning(2*(node)+i,depth+1,utilities,False,target,alpha,beta)
+              alpha=max(r,alpha)
+              if alpha>=beta:
+                break
+      return alpha
+    else:
+      for i in range(2):
+        r=alphabetapruning(2*(node)+i,depth+1,utilities,True,target,alpha,beta)
+        beta=min(r,beta)
+        if alpha>=beta:
+          break
+      return beta
+
+
+import math
+alpha=-10000
+beta=10000
+n=[2,3,5,9,0,1,7,5]
+t=math.log(len(n),2)
+print(alphabetapruning(0,0,n,True,t,alpha,beta))
+
+
+print(t)
+
+
+Output:
+
+3
+3.0
