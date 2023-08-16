@@ -1,0 +1,61 @@
+h=int(input("enter large jug volume"))
+l=int(input("enter small jug volume"))
+inst=list(map(int,(input("enter intial state").split(' '))))
+
+gs=int(input("enter goal state"))
+
+
+
+def rules(x,y):
+    if(x<h):
+        q.append([h,y])
+    if(x>0):
+        q.append([0,y])
+    if(y<l):
+        q.append([x,l])
+    if(y>0):
+        q.append([x,0])
+    if(x+y<=h and y>0):
+        q.append([x+y,0])
+    if(x+y<=l and x>0):
+        q.append([0,x+y])
+    if(x+y>=h and y>0):
+        q.append([h,(x+y)-h])
+    if(x+y>=l and x>0):
+        q.append([(x+y)-l,l])
+
+def bfs():
+    q.append(inst)
+    while(len(q)!=0):
+        j=q.pop(0)
+       
+        if(j not in v):
+            v.append(j)
+            if(gs in j):
+                return v
+            rules(j[0],j[1])
+           
+    return -1
+
+
+
+q=[]
+v=[]
+r=bfs()
+
+if(r==-1):
+    print("not found")
+else:
+    for i in r:
+        print(i)
+
+
+
+Output:
+
+
+enter large jug volume   5
+enter small jug volume   3
+enter intial state    0 0
+enter goal state   7
+not found
