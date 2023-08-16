@@ -1,73 +1,60 @@
-def iterativeDeep(graph,depth,goal):
-  if len(graph)<goal:
-    return -1
-  for i in range(depth):
-    l=BfsDfs(graph,i,goal)
-    if l[1]:
-      return l[0]
-  return -1
+g=[]
+n=int(input("Enter number of nodes"))
+for i in range(n):
+    l=[int(x) for x in input().split()]
+    g.append(l)
+    
+import math
 
-def BfsDfs(graph,i,goal):
-  j=0
-  frontier=[[1,j]]
-  visited=[]
-  z=frontier[0]
-  while(1):
-    if z[1]==i+1:
-      return visited,0
-    if z[0]==goal:
-      visited.append(z)
-      return visited,1
-    for k in range(len(graph[j])):
-      if graph[j][k]==1:
-        frontier.append([k+1,z[1]+1])
-    frontier.remove(z)
-    visited.append(z)
-    z=frontier[0]
-    j=frontier[0][0]-1
+goal=int(input("Enter goal"))
 
-graph=[[0,1,1,0,0,0,0],[0,0,0,1,1,0,0],[0,0,0,0,0,1,1],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]
-depth=3
-goal=6
-path=iterativeDeep(graph,depth,goal)
-if path==-1:
-  print("Not found")
-else:
-  print("Goal state found at depth level ",path[-1][1])
-  print("Path ",path)
-
-graph=[[0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
- [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-depth=5
-goal=17
-path=iterativeDeep(graph,depth,goal)
-if path==-1:
-  print("Not found")
-else:
-  print("Goal state found at depth level ",path[-1][1])
-  print("Path ",path)
+def depth_limited_search(g,depth,goal):
+    v=[]
+    l=recursive_dls(0,g,depth,goal,v)
+    print(v)
+    return l
+def recursive_dls(ind,g,depth,goal,v):
+    v.append(ind)
+    if ind==goal:
+        print("Goal found")
+        return ind
+    elif depth==0:
+        return -1
+    else:
+        for i in range(len(g[ind])):
+            if g[ind][i]==1 and i not in v:
+                l=recursive_dls(i,g,depth-1,goal,v)
+                if l!=-1:
+                    return l
+        return l
+        
+def iterative_deepening(g,goal):
+    for i in range(0,3):
+        print("limit",i)
+        l=depth_limited_search(g,i,goal)
+        if l!=-1:
+            return l
+l=iterative_deepening(g,goal)
+l
 
 
 
 Output:
 
-Goal state found at depth level  2
-Path  [[1, 0], [2, 1], [3, 1], [4, 2], [5, 2], [6, 2]]
-Goal state found at depth level  4
-Path  [[1, 0], [2, 1], [3, 1], [4, 1], [5, 2], [6, 2], [7, 2], [8, 2], [9, 3], [10, 3], [11, 3], [12, 3], [13, 3], [14, 3], [15, 4], [16, 4], [17, 4]]
+Enter number of nodes7
+0 1 1 0 0 0 0
+1 0 0 1 1 0 0
+1 0 0 0 0 1 1
+0 1 0 0 0 0 0
+0 1 0 0 0 0 0
+0 0 1 0 0 0 0
+0 0 1 0 0 0 0
+Enter goal5
+limit 0
+[0]
+limit 1
+[0, 1, 2]
+limit 2
+Goal found
+[0, 1, 3, 4, 2, 5]
+5
