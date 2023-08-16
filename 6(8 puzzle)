@@ -1,0 +1,99 @@
+import copy
+ins=[[1,2,3],
+     [" ",4,6],
+     [7,5,8]]
+ins
+
+g=[[1,2,3],[4,5,6],[7,8," "]]
+g
+
+def emptys(a):
+    for i in range(len(a)):
+        for j in range(len(a)):
+            if(a[i][j]==" "):
+                return i,j
+
+def heuristic(p):
+    c=0
+    for i in range(len(p)):
+        for j in range(len(p)):
+            if(p[i][j]==" "):
+              continue
+            if(p[i][j]!=g[i][j]):
+                c=c+1
+    return c
+
+
+def swap(a,h,d,i,j):
+  temp=a[h][d]
+  a[h][d]=a[i][j]
+  a[i][j]=temp
+  return a
+
+
+def puzzle(inst):
+    i,j=emptys(inst)
+    q=[]
+    h=[]
+    if(i-1>-1):
+      t = copy.deepcopy(inst)
+      t=swap(t,i-1,j,i,j)
+      q.append(t)
+      m=heuristic(t)
+      h.append(m)
+      if(m==0):
+        v.append(t)
+        return
+
+
+      if(i+1<len(inst)):
+            t=copy.deepcopy(inst)
+            t=swap(t,i+1,j,i,j)
+            q.append(t)
+            m=heuristic(t)
+            h.append(m)
+            if(m==0):
+                v.append(t)
+                return
+      if(j-1>-1):
+            t=copy.deepcopy(inst)
+            t=swap(t,i,j-1,i,j)
+            q.append(t)
+            m=heuristic(t)
+            h.append(m)
+            if(m==0):
+                v.append(t)
+                return
+    if(j+1<len(inst)):
+            t=copy.deepcopy(inst)
+            t=swap(t,i,j+1,i,j)
+            q.append(t)
+            m=heuristic(t)
+            h.append(m)
+            if(m==0):
+                v.append(t)
+                return
+    n=0
+    min=10
+
+    for k in range(len(h)):
+            if(min>h[k]):
+                min=h[k]
+                n=k
+    v.append(q[n])
+    puzzle(q[n])
+
+
+v=[]
+puzzle(ins)
+for i in v:
+  print("v is ",i)
+
+
+
+
+  Output:
+ 
+v is  [[1, 2, 3], [4, ' ', 6], [7, 5, 8]]
+v is  [[1, 2, 3], [4, 5, 6], [7, ' ', 8]]
+v is  [[1, 2, 3], [4, 5, 6], [7, 8, ' ']]
