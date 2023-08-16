@@ -1,0 +1,57 @@
+a=[[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 1, 0 ,0 ,0, 0, 0, 0, 0, 0, 0 ],
+  [1,  1, 0, 0, 0, 0 ,1, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0 ,0, 1, 1,  0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1, 1, 0, 1,  0,  0 ,0 ,0, 0, 0, 0],
+  [0 ,0 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,0 ,0 ,0 ,0 ,0],
+  [0 ,0 ,0 ,0, 0, 0 ,0, 1, 0, 1, 1, 0, 0 ,0, 0],
+  [0, 0, 0, 0, 0, 0 ,0 ,0 ,1 ,0 ,0 ,1, 1, 0, 0],
+[0, 0, 0, 0 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,0, 1, 1],
+  [0, 0, 0, 0, 0 ,0 ,0 ,0 ,0 ,1 ,0 ,0 ,0 ,0 ,0],
+[0, 0, 0, 0, 0, 0, 0, 0, 0 ,1 ,0 ,0 ,0, 0, 0],
+ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+ [0 ,0, 0, 0, 0, 0, 0 ,0 ,0, 0, 1, 0 ,0 ,0 ,0]]
+
+
+   
+def bidirectional(g):
+  i=int(input("Enter initial state"))
+  o=int(input("Enter final state"))
+  visitedi=[]
+  qi=[]
+  qo=[]
+  visitedo=[]
+  qi.append(i)
+  qo.append(o)
+  while(True):
+    print(qi)
+    print(qo)
+    ui=qi.pop(0)
+    uo=qo.pop(0)
+    visitedi.append(ui)
+    visitedo.append(uo)
+    if ui in visitedo or uo in visitedi:
+      print("Reached")
+      break
+    for i in range(len(g)):
+      if g[ui][i]!=0 and i not in visitedi:
+        qi.append(i)
+
+      if g[uo][i]!=0 and i not in visitedo:
+        qo.append(i)
+
+bidirectional(a)
+
+
+
+  Output:
+
+Enter initial state0
+Enter final state4
+[0]
+[4]
+[4]
+[0, 1, 6]
+Reached
