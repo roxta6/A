@@ -1,0 +1,45 @@
+a=[[0,1,1,0,0,0,0],[1,0,0,1,1,0,0],[1,0,0,0,0,1,1],[0,1,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0],[0,0,1,0,0,0,0]]
+import numpy as np
+
+
+inst=input("enter intial state")
+gs=input("enter goal state")
+
+def dfs():
+    v=[]
+    q=[]
+    g=ord(gs)-ord('a')
+    ins=ord(inst)-ord('a')
+    q.append(ins)
+    while(len(q)!=0):
+        j=q.pop(-1)
+        if(j not in v):
+            v.append(j)
+            if(j==g):
+                return v
+            for i in range(len(a)):
+                if(a[j][i]==1):
+                    if(i not in v):
+                        q.append(i)
+    return -1
+
+r=dfs()
+if(r==-1):
+    print("not found")
+else:
+    for i in r:
+        print(chr(ord('a')+i))
+
+
+Output:
+
+
+enter intial state  a
+enter goal state   d
+a
+c
+g
+f
+b
+e
+d
