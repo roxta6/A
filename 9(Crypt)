@@ -1,0 +1,77 @@
+def addletter(s1,d):
+  for i in s1:
+    if i not in d.keys():
+      d[i]=1
+    else:
+      d[i]+=1
+
+def isValid(nl,s1,s2,s3):
+  m1=1
+  val1=0
+  val2=0
+  val3=0
+
+  for i in s1[::-1]:
+    val1+=m1*nl[i]
+    m1*=10
+  m1=1
+
+  for i in s2[::-1]:
+    val2+=m1*nl[i]
+    m1*=10
+  m1=1
+  for i in s3[::-1]:
+    val3+=m1*nl[i]
+    m1*=10
+
+  if (val1+val2)==val3:
+    print(nl)
+    return True
+  return False
+
+isValid({'a':1,'b':2},'a','a','b')
+
+import itertools
+def solve2(letters,s1,s2,s3):
+    print(letters)
+    digits = range(10)
+    for perm in itertools.permutations(digits, len(letters)):
+        sol = dict(zip(letters, perm))
+        if sol[s1[0]] == 0 or sol[s3[0]] == 0:
+            continue
+
+        if isValid(sol,s1,s2,s3):
+          print("solved")
+          return
+
+
+use=[0 for i in range(10)]
+nl={}
+def cryptarithmetic(s1,s2,s3):
+  d={}
+  addletter(s1,d)
+  addletter(s2,d)
+  addletter(s3,d)
+
+  a={}
+  count=len(d)
+  if(len(d)>10):
+    print("Invalid strings")
+    return
+  solve2(list(d.keys()),s1,s2,s3)
+
+
+s1="KANSAS"
+s2="OHIO"
+s3="OREGON"
+cryptarithmetic(s1,s2,s3)
+
+
+
+Output:
+
+
+{'a': 1, 'b': 2}
+['K', 'A', 'N', 'S', 'O', 'H', 'I', 'R', 'E', 'G']
+{'K': 4, 'A': 9, 'N': 7, 'S': 2, 'O': 5, 'H': 8, 'I': 6, 'R': 0, 'E': 3, 'G': 1}
+solved
