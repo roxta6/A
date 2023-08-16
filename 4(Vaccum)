@@ -1,0 +1,72 @@
+d={}
+d[1]=[1,5,2]
+d[2]=[1,4,2]
+d[3]=[3,7,4]
+d[4]=[3,4,4]
+d[5]=[5,5,6]
+d[6]=[5,8,6]
+
+print(d)
+
+k={}
+k[1]=["(dirt,vaccum)  ,  (dirt)"]
+k[2]=["(dirt)         , (dirt,vaccum)"]
+k[3]=["(dirt,vaccum)  ,  (clean)"]
+k[4]=["(dirt)         , (clean,vaccum)"]
+k[5]=["(clean,vaccum) , (dirt)"]
+k[6]=["(clean)        ,   (dirt,vaccum)"]
+k[7]=["(clean,vaccum) , (clean)"]
+k[8]=["(clean)        ,   (clean,vaccum)"]
+
+
+ins=int(input("enter initial state"))
+
+
+def vaccum_dfs():
+    v=[]
+    q=[]
+    g=[7,8]
+    m=[]
+    q.append(ins)
+    while(len(q)!=0):
+        j=q.pop(-1)
+        if(j not in v):
+            v.append(j)
+            if(j in g):
+                return v,m
+            p=d[j]
+            for i in range(3):
+                if(p[i] not in v):
+                    q.append(p[i])
+                    if(i==0):
+                        m.append("left")
+                    elif(i==1):
+                        m.append("suck")
+                    else:
+                        m.append("right")
+    return -1,-1
+
+a,b=vaccum_dfs()
+for i in range(len(a)):
+    print(k[a[i]],   a[i])
+    print(b[i])
+
+
+
+Output:
+
+
+{1: [1, 5, 2], 2: [1, 4, 2], 3: [3, 7, 4], 4: [3, 4, 4], 5: [5, 5, 6], 6: [5, 8, 6]}
+
+enter initial state1
+
+['(dirt,vaccum)  ,  (dirt)'] 1
+suck
+['(dirt)         , (dirt,vaccum)'] 2
+right
+['(dirt)         , (clean,vaccum)'] 4
+suck
+['(dirt,vaccum)  ,  (clean)'] 3
+left
+['(clean,vaccum) , (clean)'] 7
+suck
